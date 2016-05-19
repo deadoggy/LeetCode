@@ -1,3 +1,10 @@
+//fist sort nums from smaller ones to biger ones, to make sure answer is in non-descending order
+//fix nums[FirIndex], SecIndex begin at FirIndex+1, ThiIndex begin at the end of nums,
+//if nums[FirIndex] + (nums[SecIndex] + nums[ThiIndex]) > 0, that means (nums[SecIndex] + nums[ThiIndex]) is 
+//too large. Considering SecIndex can not move to left, so move ThiIndex to left to make their sum smaller
+//if nums[FirIndex] + (nums[SecIndex] + nums[ThiIndex]) < 0, that means (num[SecIndex] + nums[ThiIndex]) is
+//too small, and ThiIndex can not move to right, so SecIndex moves to right side.
+// How to remove duplication is showed in the code
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
@@ -24,20 +31,24 @@ public:
         
         for(FirIndex = 0; FirIndex < nums.size() - 2; FirIndex++)
         {
+            //remove duplication
             if(FirIndex != 0 && nums[FirIndex - 1] == nums[FirIndex])
             {
                 continue;
             }
+            //reduce compute times
+            if(nums[FirIndex] > 0)
+              break;
             sum = sum - nums[FirIndex];
             SecIndex = FirIndex + 1;
             ThiIndex = nums.size() - 1;
             while(SecIndex < ThiIndex)
             {
-                if(sum - nums[SecIndex] - nums[ThiIndex] > 0)
+                if(nums[FirIndex] + nums[SecIndex] + nums[ThiIndex] < 0)
                {
                    SecIndex++;
                }
-               else if(sum - nums[SecIndex] - nums[ThiIndex] < 0)
+               else if(nums[FirIndex] + nums[SecIndex] + nums[ThiIndex] > 0)
                {
                    ThiIndex--;
                }
@@ -49,11 +60,13 @@ public:
                    ret.push_back(res);
                    res.clear();
                    SecIndex++;
+                   //remove duplication
                    while(nums[SecIndex] == nums[SecIndex-1])
                    {
                        SecIndex ++;
                    }
                    ThiIndex--;
+                   //remove duplication
                    while(nums[ThiIndex] == nums[ThiIndex+1])
                    {
                        ThiIndex--;
