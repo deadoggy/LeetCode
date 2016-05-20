@@ -1,5 +1,4 @@
-//On Accepted Solutions Runtime Distribution there are many solutions use much fewer times
-//and I have not thought out how to improve it
+//The algriothm is the best. Why it run slow may not be the responsibility of algriothm
 class Solution {
 public:
     int threeSumClosest(vector<int>& nums, int target) {
